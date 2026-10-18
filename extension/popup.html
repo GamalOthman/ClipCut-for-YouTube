@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ClipCut</title>
+<style>
+  :root { --bg:#fff; --card:#f4f5f7; --text:#1f2328; --muted:#5f6670; --line:#dfe2e6; --accent:#d93025; --ok:#188038; --err:#c5221f; --warn:#8a6100; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#202124; --card:#2b2c2f; --text:#e8eaed; --muted:#9aa0a6; --line:#3c4043; --accent:#e5534b; --ok:#81c995; --err:#f28b82; --warn:#fdd663; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; width:330px; background:var(--bg); color:var(--text); font:13px/1.4 "Segoe UI", Roboto, Arial, sans-serif; }
+  header { display:flex; align-items:center; gap:8px; padding:10px 12px; border-bottom:1px solid var(--line); }
+  header b { flex:1; font-size:14px; }
+  .dot { width:10px; height:10px; border-radius:3px; background:var(--accent); }
+  a { color:inherit; cursor:pointer; }
+  .link { color:var(--muted); text-decoration:none; font-size:12px; }
+  .link:hover { color:var(--text); text-decoration:underline; }
+  section { padding:10px 12px; }
+  section + section { border-top:1px solid var(--line); }
+  h2 { margin:0 0 8px; font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .title { font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:8px; }
+  .row { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+  .lbl { width:34px; color:var(--muted); }
+  .time { font:600 13px Consolas, "Roboto Mono", monospace; min-width:72px; padding:4px 6px; border-radius:6px; background:var(--card);
+          text-align:center; border:0; color:var(--text); cursor:pointer; }
+  .time:disabled { cursor:default; opacity:.6; }
+  button { font:inherit; color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:7px; padding:5px 9px; cursor:pointer; white-space:nowrap; }
+  button:hover:not(:disabled) { filter:brightness(.96); }
+  @media (prefers-color-scheme: dark) { button:hover:not(:disabled) { filter:brightness(1.15); } }
+  button:disabled { opacity:.45; cursor:default; }
+  button.small { padding:3px 6px; font-size:12px; }
+  button.mark { margin-left:auto; }
+  button.go { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; flex:1; }
+  select { font:inherit; color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:7px; padding:4px 6px; margin-left:auto; }
+  .msg { font-size:12px; margin-top:6px; min-height:0; }
+  .err { color:var(--err); } .ok { color:var(--ok); } .warn { color:var(--warn); } .muted { color:var(--muted); }
+  .bar { height:6px; background:var(--card); border-radius:3px; overflow:hidden; margin:6px 0 4px; }
+  .bar i { display:block; height:100%; width:0; background:var(--accent); transition:width .2s; }
+  .bar.ind i { width:30%; animation:slide 1.1s linear infinite; }
+  @keyframes slide { from { margin-left:-30%; } to { margin-left:100%; } }
+  .job { margin-bottom:8px; }
+  .job .name { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .job .sub { color:var(--muted); font-size:12px; }
+  .q { display:flex; align-items:center; gap:6px; padding:3px 0; }
+  .q .name { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--muted); }
+  .hide { display:none !important; }
+  .empty { color:var(--muted); }
+</style>
+</head>
+<body>
+<header><span class="dot"></span><b>ClipCut</b><a class="link" id="settings">Settings</a></header>
+
+<section id="video">
+  <div class="title" id="vtitle"></div>
+  <div class="row">
+    <span class="lbl">Start</span>
+    <button class="time" id="ts" title="Jump to the start">--:--</button>
+    <button class="small" id="s-" title="1 second earlier">−1s</button>
+    <button class="small" id="s+" title="1 second later">+1s</button>
+    <button class="mark" id="ms">Mark start</button>
+  </div>
+  <div class="row">
+    <span class="lbl">End</span>
+    <button class="time" id="te" title="Jump to the end">--:--</button>
+    <button class="small" id="e-" title="1 second earlier">−1s</button>
+    <button class="small" id="e+" title="1 second later">+1s</button>
+    <button class="mark" id="me">Mark end</button>
+  </div>
+  <div class="row">
+    <button id="preview" title="Play from start to end">Preview</button>
+    <button id="clear">Clear</button>
+    <select id="mode"><option value="video">Video</option><option value="audio">Audio only</option></select>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button class="go" id="dl">Download clip</button>
+    <button id="whole">Whole video</button>
+  </div>
+  <div class="msg" id="vmsg"></div>
+</section>
+
+<section id="novideo" class="hide"><div class="empty" id="novideo-text">Open a YouTube video to mark a clip.</div></section>
+
+<section>
+  <h2>Downloads</h2>
+  <div id="jobs"></div>
+  <div class="msg" id="tools"></div>
+</section>
+
+<script src="popup.js"></script>
+</body>
+</html>

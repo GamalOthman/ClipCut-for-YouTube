@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "ClipCut for YouTube",
+  "short_name": "ClipCut",
+  "version": "2.1.0",
+  "description": "Mark start and end while you watch YouTube, then download the clip. Needs the helper installed by Setup.bat.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtIBLwdn2ZJahDIyuL7Z6OPQJ15CcnB4i3O2t7nyNFquC9mozAPSTH0bKh92CJXx4WIyRRJlfJMaeyN1zhteivFB+YJltAtEqLttnfE2YNP8zoApn2j5d09UdjMOC9gCb0CcxmtluzGhssEn3r0Zge2mht1aJBJl57cOPE8cAIV8z/+AXwjMUspbiTtNlnDjGBp4NOZGm0+8+9Dl5wpvaKU+3XW6mk5Wie6h2QLxqFwSzp8tr2+09KArVJ0s4yxS2dygguje02Xyy/jFKt/1wVQE1E8PnsBpk7ag5FtpR4oDVct0UJ6coYw3+QLfHvDul1uki6MqsNjSJDm2OtzwMqwIDAQAB",
+  "permissions": [
+    "nativeMessaging",
+    "cookies",
+    "storage",
+    "notifications",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "page.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "ClipCut",
+    "default_popup": "popup.html"
+  },
+  "minimum_chrome_version": "111",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

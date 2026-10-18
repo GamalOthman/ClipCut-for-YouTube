@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClipCut Settings</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1f2328; --muted:#5f6670; --line:#d9dde3; --accent:#d93025; --ok:#188038; --err:#c5221f; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181a; --card:#202124; --text:#e8eaed; --muted:#9aa0a6; --line:#3c4043; --accent:#f28b82; --ok:#81c995; --err:#f28b82; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.45 "Segoe UI", Roboto, Arial, sans-serif; }
+  main { max-width: 640px; margin: 32px auto; padding: 0 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  section { background: var(--card); border:1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .grid { display:grid; grid-template-columns: 150px 1fr; gap: 10px 14px; align-items:center; }
+  label.check { display:flex; gap:8px; align-items:center; grid-column: 1 / -1; }
+  select, input[type=text] { width:100%; padding:7px 9px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--text); font:inherit; }
+  .row { display:flex; gap:8px; align-items:center; }
+  button { padding:7px 14px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--text); font:inherit; cursor:pointer; white-space:nowrap; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity:.5; cursor:default; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .ok { color: var(--ok); } .err { color: var(--err); }
+  #saved { min-height: 20px; }
+  ul { margin: 6px 0 0; padding-left: 18px; }
+  @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>ClipCut Settings</h1>
+  <p class="sub">Changes are saved straight away.</p>
+  <p id="error" class="err"></p>
+
+  <section>
+    <h2>Video</h2>
+    <div class="grid">
+      <label for="max_res">Max resolution</label><select id="max_res"></select>
+      <label for="container">Format</label><select id="container"></select>
+      <label class="check"><input type="checkbox" id="prefer_h264"> Prefer H.264 (plays on every device)</label>
+      <label class="check"><input type="checkbox" id="precise_cut"> Precise cut (slower; starts exactly at your mark)</label>
+      <label class="check"><input type="checkbox" id="compress"> Make the file smaller after download (re-encodes, slower)</label>
+      <label for="compress_level">Smaller by</label><select id="compress_level"></select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Audio only</h2>
+    <div class="grid">
+      <label for="audio_format">Audio format</label><select id="audio_format"></select>
+      <label for="audio_bitrate">Bitrate (kbps)</label><select id="audio_bitrate"></select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Default download type</h2>
+    <div class="grid">
+      <label for="mode">Download</label>
+      <select id="mode"><option value="video">Video</option><option value="audio">Audio only</option></select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Notifications</h2>
+    <label class="check" style="display:flex;gap:8px;align-items:center">
+      <input type="checkbox" id="notify"> Show a Windows notification when a download finishes or fails
+    </label>
+  </section>
+
+  <section>
+    <h2>Save to</h2>
+    <div class="row">
+      <input type="text" id="dest" readonly>
+      <button id="choose">Choose folder…</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tools</h2>
+    <div id="tools" class="muted">Checking…</div>
+    <div class="row" style="margin-top:10px">
+      <button id="update" class="primary">Update tools</button>
+      <span id="upd" class="muted"></span>
+    </div>
+    <p class="muted">yt-dlp is checked for updates once a week by itself. If downloads suddenly stop working, click Update tools.</p>
+  </section>
+
+  <p id="saved" class="muted"></p>
+</main>
+<script src="options.js"></script>
+</body>
+</html>
