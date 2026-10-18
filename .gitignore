@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Logs and local data
+*.log
+settings.json
+state.json
+tools.json
+
+# Release files (built into dist/, attached to a GitHub Release instead)
+dist/
+*.zip
+
+# Windows / editors
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
